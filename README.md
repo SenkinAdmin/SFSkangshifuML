@@ -1,5 +1,5 @@
 # SFSkangshifuML
-基于康师傅免流深度重构，优化核心逻辑与交互体验，提供更稳定、更现代化的使用方案。 面向云原生轻量服务的高可用流控防护组件（其实就是改了点 UI）。
+基于康师傅免流深度重构，优化核心逻辑与交互体验，提供更稳定、更现代化的使用方案。 面向云原生轻量服务的高可用流控防护组件（其实就是改了点 UI和修了点BUG）。
 康师傅免流 · 二开重构版
 By-Senkin
 
@@ -20,16 +20,11 @@ BUG未知
 2026.6.7
 
 由于懒得折腾各种下载源，目前默认使用 GitHub 源。
-另外感谢各位老哥的支持，项目随缘更新。
+另外感谢各位大佬的支持，项目随缘更新。
 
 一键脚本：
 
-curl -fsSL https://raw.githubusercontent.com/你的用户名/你的仓库/main/install.sh | bash
-
-交流群：自己填
-
-宁缺毋滥
-伞兵勿扰
+yum -y install wget;wget -N --no-check-certificate "https://github.com/SenkinAdmin/SFSkangshifuML/raw/refs/heads/main/kangml.sh";chmod 777 kangml.sh;./kangml.sh
 
 有问题请优先自行研究：
 [www.baidu.com](http://www.baidu.com)
