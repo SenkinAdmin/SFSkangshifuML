@@ -4,6 +4,8 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 #######
+REPO="https://raw.githubusercontent.com/SenkinAdmin/SFSkangshifuML/refs/heads/main"
+
 Main()
 {
 Loading
@@ -16,7 +18,6 @@ clear
 echo
 echo "正在启动搭建程序，预计需要30秒，请稍后...（如果30秒后没反应可重新连接服务器再试）
 -----------"
-#安装环境 避免因缺失环境出现错误
 yum -y install wget curl openssl net-tools net-tools.x86_64 >/dev/null 2>&1
 Home_page
 }
@@ -27,21 +28,21 @@ clear
 echo
 echo "
 ==================================================================
-		Openvpn流量控制系统 | 一键搭建脚本
+		Senkin康师傅流量控制系统 | 一键搭建脚本
                  Powered by kangml.com 2015-2021
 				 
-                  Crack By yyrh.me&lyiqk.cn 2015-2021
+                   By Senkin基于原版开源破解 2026
 
      温馨提示：
-         做最好(lā jī)的服务,做最好(lā jī)的搭建程序。
-         授权码绑定IP后可在同一IP下无限使用！(这么麻烦干啥，我帮你破了，顺便帮你修复了bug，不用谢我。)
+         做最好(lā jī)的服务,做最好的搭建程序。
+         授权码绑定IP后才可使用(这么麻烦干啥，我帮你破了，顺便帮你修复了bug，不用谢我。反正官网已经倒闭了)
          禁止使用Centos7.x 64位以外的系统版本搭建！
          本脚本仅适用于学习与研究等个人用途,请勿用于任何违法国家法律的活动！
          谢谢各位老康粉(nǎo cán fěn)的支持！
                  by 康师傅(ruò zhì kāng) 2021-05-11
-				 
-                  Crack By 烟雨如花 2022-01-10
-                  凌一在此提前祝大家新年快乐！
+
+                  Crack By 烟雨如花 2026-06-07
+                  Senkin在此提前祝大家新年快乐！
 ==================================================================
 
 回车Enter继续~
@@ -76,7 +77,7 @@ if [[ $k == 3 ]];then
 Install_Fuzai
 fi
 if [[ $k == 4 ]];then
-Install_App
+Install_App_Only
 fi
 Ntp_Date
 }
@@ -93,16 +94,17 @@ Check_OS
 
 Check_OS()
 {
-if [ -f "/var/www/html" ];then
+# BUG修复：/var/www/html是目录，用-d判断
+if [ -d "/var/www/html" ];then
 echo "
 康师傅(ruò zhì kāng)AI智能(zhàng)系统：检测到您已安装流控，如需要重新安装流控，请先给服务器重装系统！
-凌一：咋地了老铁，是不是对我写的弱智康脚本情有独钟老想搭建啊，那多搭建几台吧，这可比官方的好使~~~
+Senkin：kangshifu4.0让你免费白嫖了给我点个star不过分吧？？，那多搭建几台吧，这可比官方的好使~~~
 "
 fi
 if [ ! -f "/root/bin/ps" ];then
 echo "
-【系统错误】可能是服务器环境问题导致～请联系客服！结束搭建。
-凌一：没事别搞事啊卧槽，你是内鬼吗，有内鬼，终止交易！
+【系统错误】可能是服务器环境问题导致～请联系客服！结束搭建推荐使用Centos7.x。
+github永久仓库，如果不能用检查DNS，或者机器是否通外网可以？？？
 "
 fi
 Install_Auth
@@ -112,21 +114,23 @@ Install_Update()
 {
 clear
 cd /var/www/html/
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/kangml-update.zip
+wget -q ${REPO}/kangml-update.zip
 unzip -o kangml-update.zip >/dev/null 2>&1
 chmod 777 -R ./ >/dev/null 2>&1
 rm -rf kangml-update.zip >/dev/null 2>&1
-echo "弱智康提示您：已经更新完毕！"
+echo "康师傅Senkin二开版提示您：已经更新完毕！"
 }
 
 Install_Fuzai()
 {
-wget -q 下崽源/kangfz.sh
+wget -q ${REPO}/kangfz.sh
+bash kangfz.sh
 }
 
-Install_App()
+Install_App_Only()
 {
-wget -q 下崽源/kangapp.sh
+wget -q ${REPO}/kangapp.sh
+bash kangapp.sh
 }
 
 Install_Auth()
@@ -134,24 +138,23 @@ Install_Auth()
 echo "
 【验证授权】
 温馨提示：为了您的服务器安全，请勿(kuài)非法破解授权。
-如需安装请购(wù)买正版密钥：pay.pykky.com
+如需安装请购(wù)买正版密钥：本人唯一博客senkin.00xm.top
 脚本授权一次，同一IP永久使用，卡密请保管好。
-(凌一:我大哥周某教导我，买是不可能买的，这辈子都不可能买的，只能白嫖这个样子，破解一时爽，一直破解一直爽。)
+(Senkin:这辈子都不可能买的，只能白嫖这个样子，破解一时爽，一直破解一直爽。)
 "
 echo
-echo -n "请输入流控搭建授权码(yyrh.me):"
+echo -n "请输入流控搭建授权码(Senkin):"
 read PASSWD
 sleep 1
 echo "正在加载数据...请稍候..."
-if [ "$PASSWD" = 'yyrh.me' ]
+if [ "$PASSWD" = 'Senkin' ]
 then
 Auth_Yes
 fi
 echo "
-【错误】授权码不正确！请检查一下是不是复制错了？结束搭建。
-凌一:有内鬼？你TM不对劲！一看就不是自己人，卧槽嘞！
+【错误】授权码不正确！你这能输错？结束搭建。
 "
-exit;0
+exit 1
 }
 
 Auth_Yes()
@@ -182,54 +185,42 @@ echo "
 echo
 read -p "请输入数字并回车（默认阿里云）：" b
 echo
-s=$b
+
+Setup_Aliyun_Repo()
+{
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup >/dev/null 2>&1
+wget -qO /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo >/dev/null 2>&1
+wget -qO /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo >/dev/null 2>&1
+yum install -y https://mirrors.aliyun.com/remi/enterprise/remi-release-7.rpm >/dev/null 2>&1
+sed -i 's/https*:\/\/rpms.remirepo.net/https:\/\/mirrors.aliyun.com\/remi/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
+sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
+sed -i 's|^mirrorlist|#mirrorlist|' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
+yum clean all >/dev/null 2>&1
+yum makecache >/dev/null 2>&1
+yum -y install yum-utils >/dev/null 2>&1
+}
+
 if [[ $b == 1 ]];then
 echo "已选择安装源：阿里云"
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup >/dev/null 2>&1
-wget -qO /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo >/dev/null 2>&1
-wget -qO /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo >/dev/null 2>&1
-yum install -y https://mirrors.aliyun.com/remi/enterprise/remi-release-7.rpm >/dev/null 2>&1
-sed -i 's/https*:\/\/rpms.remirepo.net/https:\/\/mirrors.aliyun.com\/remi/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-sed -i 's|^mirrorlist|#mirrorlist|' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-yum clean all >/dev/null 2>&1
-yum makecache >/dev/null 2>&1
-yum -y install yum-utils >/dev/null 2>&1
+Setup_Aliyun_Repo
+Install_Command
+elif [[ $b == 2 ]];then
+echo "已选择安装源：本地源"
+Setup_Aliyun_Repo
+Install_Command
+else
+echo "已选择安装源：阿里云（默认）"
+Setup_Aliyun_Repo
 Install_Command
 fi
-if [[ $b == 2 ]];then
-# 没扒他的yum源 凑合用阿里云的吧
-echo "已选择安装源：弱智康"
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup >/dev/null 2>&1
-wget -qO /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo >/dev/null 2>&1
-wget -qO /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo >/dev/null 2>&1
-yum install -y https://mirrors.aliyun.com/remi/enterprise/remi-release-7.rpm >/dev/null 2>&1
-sed -i 's/https*:\/\/rpms.remirepo.net/https:\/\/mirrors.aliyun.com\/remi/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-sed -i 's|^mirrorlist|#mirrorlist|' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-yum clean all >/dev/null 2>&1
-yum makecache >/dev/null 2>&1
-yum -y install yum-utils >/dev/null 2>&1
-Install_Command
-fi
-echo "已选择安装源：阿里云"
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup >/dev/null 2>&1
-wget -qO /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo >/dev/null 2>&1
-wget -qO /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo >/dev/null 2>&1
-yum install -y https://mirrors.aliyun.com/remi/enterprise/remi-release-7.rpm >/dev/null 2>&1
-sed -i 's/https*:\/\/rpms.remirepo.net/https:\/\/mirrors.aliyun.com\/remi/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-sed -i 's|^mirrorlist|#mirrorlist|' /etc/yum.repos.d/remi-glpi91.repo /etc/yum.repos.d/remi-glpi92.repo /etc/yum.repos.d/remi-glpi93.repo /etc/yum.repos.d/remi-glpi94.repo /etc/yum.repos.d/remi-modular.repo /etc/yum.repos.d/remi-php54.repo /etc/yum.repos.d/remi-php70.repo /etc/yum.repos.d/remi-php71.repo /etc/yum.repos.d/remi-php72.repo /etc/yum.repos.d/remi-php73.repo /etc/yum.repos.d/remi-php74.repo /etc/yum.repos.d/remi-php80.repo /etc/yum.repos.d/remi-php81.repo /etc/yum.repos.d/remi.repo /etc/yum.repos.d/remi.repo.rpmnew /etc/yum.repos.d/remi-safe.repo >/dev/null 2>&1
-yum clean all >/dev/null 2>&1
-yum makecache >/dev/null 2>&1
-yum -y install yum-utils >/dev/null 2>&1
-Install_Command
 }
 
 Install_Options()
 {
-IP=`curl -s ip.3322.net`;
-wangka1=`ifconfig`;wangka2=`echo $wangka1|awk '{print $1}'`;wangka=${wangka2/:/};
+IP=`curl -s ip.3322.net`
+wangka1=`ifconfig`
+wangka2=`echo $wangka1|awk '{print $1}'`
+wangka=${wangka2/:/}
 clear
 echo
 sleep 1
@@ -249,28 +240,28 @@ echo -e "已设置后台管理员账号："$User""
 echo
 read -p "填写后台管理员密码(为了安全，请不要密码设置123456这么简单的，回车默认随机)：" Pwd
 if [ -z "$Pwd" ];then
-Pwd=`date +%s%N | md5sum | head -c 6 ; echo`;
+Pwd=`date +%s%N | md5sum | head -c 6 ; echo`
 fi
 echo -e "已设置后台管理员密码："$Pwd""
 	
 echo
 read -p "填写后台管理员安全码(为了安全，请不要密码设置123456这么简单的，回车默认随机)：" Pwd2
 if [ -z "$Pwd2" ];then
-Pwd2=`date +%s%N | md5sum | head -c 6 ; echo`;
+Pwd2=`date +%s%N | md5sum | head -c 6 ; echo`
 fi
 echo -e "已设置后台管理员安全码："$Pwd2""
 	
 echo
 read -p "填写数据库目录名字(5-10个英文字母，为了安全，请不要设置admin和mysql，不要和管理员目录相同，回车随机)：" Sql
 if [ -z "$Sql" ];then
-Sql=`date +%s%N | md5sum | head -c 10 ; echo`;
+Sql=`date +%s%N | md5sum | head -c 10 ; echo`
 fi
 echo -e "已设置数据库目录名字："$Sql""
 
 echo
 read -p "填写数据库密码(为了安全，请不要密码设置123456这么简单的，回车默认随机)：" SqlPwd
 if [ -z "$SqlPwd" ];then
-SqlPwd=`date +%s%N | md5sum | head -c 10 ; echo`;
+SqlPwd=`date +%s%N | md5sum | head -c 10 ; echo`
 fi
 echo -e "已设置数据库目录密码："$SqlPwd""
 
@@ -296,7 +287,7 @@ echo "
 read
 clear
 echo "
->>>开始搭建，预计花费几分钟，趁这个时间去喝杯茶吧！
+>>>开始搭建，预计花费10-30分钟，尽情期待！
 【搭建的时候，进度条卡住是正常的，不要动它，请耐心等待】
 "
 sleep 5
@@ -385,7 +376,6 @@ iptables -t nat -A POSTROUTING -s 10.12.0.0/24 -j MASQUERADE
 iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 iptables -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
 service iptables save
-
 systemctl restart iptables.service > /dev/null 2>&1
 systemctl enable iptables.service > /dev/null 2>&1
 echo "[#################################################] 100%"
@@ -403,8 +393,8 @@ yum -y install pam pam-devel > /dev/null 2>&1
 yum -y install automake pkgconfig gawk tar zip unzip net-tools psmisc gcc pkcs11-helper libxml2 libxml2-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel > /dev/null 2>&1
 yum -y install mariadb mariadb-server dnsmasq jre-1.7.0-openjdk crontabs lsof > /dev/null 2>&1
 yum install -y php74 php74-php-devel php74-php-fpm php74-php-mbstring php74-php-memcache php74-php-memcached php74-php-redis php74-php-mysqlnd php74-php-pdo php74-php-bcmath php74-php-xml php74-php-gd php74-php-gmp php74-php-igbinary php74-php-imagick php74-php-mcrypt php74-php-pdo_mysql php74-php-posix php74-php-simplexml php74-php-opcache php74-php-xsl php74-php-xmlwriter php74-php-xmlreader php74-php-swoole php74-php-zip php74-php-phalcon php74-php-yaml php74-php-yar php74-php-yaf php74-php-uuid > /dev/null 2>&1
-rpm -Uvh https://raw.githubusercontent.com/lingyia/kangml4.0/master/liblz4-1.8.1.2-alt1.x86_64.rpm --force --nodeps > /dev/null 2>&1
-rpm -Uvh https://raw.githubusercontent.com/lingyia/kangml4.0/master/openvpn-2.4.3-1.el7.x86_64.rpm --force --nodeps > /dev/null 2>&1
+rpm -Uvh ${REPO}/liblz4-1.8.1.2-alt1.x86_64.rpm --force --nodeps > /dev/null 2>&1
+rpm -Uvh ${REPO}/openvpn-2.4.3-1.el7.x86_64.rpm --force --nodeps > /dev/null 2>&1
 systemctl start mariadb.service > /dev/null 2>&1
 mysqladmin -uroot password ''$SqlPwd'' > /dev/null 2>&1
 mysql -uroot -p''$SqlPwd'' -e 'create database vpndata;' > /dev/null 2>&1
@@ -414,16 +404,16 @@ yum makecache > /dev/null 2>&1
 yum install -y nginx > /dev/null 2>&1
 mkdir -p /var/www/html
 rm -rf /etc/nginx/conf.d/default.conf > /dev/null 2>&1
-wget -qO /etc/nginx/conf.d/default.conf https://raw.githubusercontent.com/lingyia/kangml4.0/master/default.conf > /dev/null 2>&1
+wget -qO /etc/nginx/conf.d/default.conf ${REPO}/default.conf > /dev/null 2>&1
 sed -i 's/listen 80/listen 1234/g' /etc/nginx/conf.d/default.conf > /dev/null 2>&1
 systemctl start nginx > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/ixed.7.4.lin -P /opt/remi/php74/root/usr/lib64/php/modules/ > /dev/null 2>&1
+wget -q ${REPO}/ixed.7.4.lin -P /opt/remi/php74/root/usr/lib64/php/modules/ > /dev/null 2>&1
 echo ' extension=ixed.7.4.lin' >> /etc/opt/remi/php74/php.ini
 chmod 777 /var/opt/remi/php74/lib/php/session > /dev/null 2>&1
 ln -s /bin/php74 /bin/php > /dev/null 2>&1
 systemctl start php74-php-fpm > /dev/null 2>&1
 rm -rf /etc/dnsmasq.conf > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/dnsmasq.conf -P /etc > /dev/null 2>&1
+wget -q ${REPO}/dnsmasq.conf -P /etc > /dev/null 2>&1
 chmod 0777 /etc/dnsmasq.conf > /dev/null 2>&1
 echo '#kangml自定义屏蔽host文件 ' >> /etc/kangml_host
 chmod 0777 /etc/kangml_host > /dev/null 2>&1
@@ -439,7 +429,7 @@ Install_OpenVPN()
 echo "【4/7】安装OPENVPN主程序（预计30秒）"
 cd /etc/openvpn > /dev/null 2>&1
 rm -rf /etc/openvpn/client /etc/openvpn/server > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/openvpn.zip > /dev/null 2>&1
+wget -q ${REPO}/openvpn.zip > /dev/null 2>&1
 cd /etc/openvpn > /dev/null 2>&1
 unzip -o openvpn.zip > /dev/null 2>&1
 rm -rf openvpn.zip > /dev/null 2>&1
@@ -453,18 +443,20 @@ Install_RuoZhiKang()
 {
 echo "【5/7】安装康师傅流控（预计30秒）"
 cd
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/shvpn > /dev/null 2>&1
+wget -q ${REPO}/shvpn > /dev/null 2>&1
 chmod 777 shvpn > /dev/null 2>&1
 ./shvpn 1 > /dev/null 2>&1
-# rm -rf ./shvpn > /dev/null 2>&1
 systemctl start crond.service
-crontab -l > /tmp/crontab1200
-echo '0 1 * * * /bin/vpn cleanuser #每天凌晨1点清理未激活用户 55 23 * * * php /var/www/html/admin/cron.php #每天23:55统计用户和代理' >> /tmp/crontab.1200
-crontab /tmp/crontab.1200 > /dev/null 2>&1
+# BUG修复：统一crontab临时文件名
+crontab -l > /tmp/crontab_tmp
+echo '0 1 * * * /bin/vpn cleanuser #每天凌晨1点清理未激活用户' >> /tmp/crontab_tmp
+echo '55 23 * * * php /var/www/html/admin/cron.php #每天23:55统计用户和代理' >> /tmp/crontab_tmp
+crontab /tmp/crontab_tmp > /dev/null 2>&1
+rm -rf /tmp/crontab_tmp
 systemctl restart crond.service
-mkdir /etc/rate.d/
+mkdir -p /etc/rate.d/
 chmod -R 0777 /etc/rate.d/ > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/res.zip > /dev/null 2>&1
+wget -q ${REPO}/res.zip > /dev/null 2>&1
 unzip -o res.zip > /dev/null 2>&1
 chmod -R 0777 /root > /dev/null 2>&1
 rm -rf /root/res.zip > /dev/null 2>&1
@@ -472,14 +464,14 @@ mv /root/res/kangml.service /lib/systemd/system/kangml.service > /dev/null 2>&1
 chmod -R 0777 /lib/systemd/system/kangml.service > /dev/null 2>&1
 systemctl enable kangml.service
 cd /bin > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/bin.zip > /dev/null 2>&1
+wget -q ${REPO}/bin.zip > /dev/null 2>&1
 cd /bin > /dev/null 2>&1
 unzip -o bin.zip > /dev/null 2>&1
 rm -rf /bin/bin.zip > /dev/null 2>&1
 chmod -R 0777 /bin > /dev/null 2>&1
 rm -rf /var/www/html > /dev/null 2>&1
 cd /var/www > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/kangml_web.zip > /dev/null 2>&1
+wget -q ${REPO}/kangml_web.zip > /dev/null 2>&1
 unzip -o kangml_web.zip > /dev/null 2>&1
 rm -rf kangml_web.zip > /dev/null 2>&1
 chmod 0777 -R /var/www/html > /dev/null 2>&1
@@ -501,15 +493,15 @@ echo "【6/7】制作APP（预计1-2分钟）"
 rm -rf /APP > /dev/null 2>&1
 mkdir /APP > /dev/null 2>&1
 cd /APP > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/kangml.apk > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/apktool.jar > /dev/null 2>&1
+wget -q ${REPO}/kangml.apk > /dev/null 2>&1
+wget -q ${REPO}/apktool.jar > /dev/null 2>&1
 java -jar apktool.jar d kangml.apk > /dev/null 2>&1
 rm -rf kangml.apk > /dev/null 2>&1
 sed -i 's/Kangml/'$AppName'/g' /APP/kangml/res/values/strings.xml > /dev/null 2>&1
-sed -i 's/118.195.174.185:1234/'$IP:1234'/g' /APP/kangml/res/values/strings.xml > /dev/null 2>&1
+sed -i 's/118.195.174.185:1234/'$Appip:1234'/g' /APP/kangml/res/values/strings.xml > /dev/null 2>&1
 sed -i 's/dailiid/'0'/g' /APP/kangml/res/values/strings.xml > /dev/null 2>&1
 java -jar apktool.jar b kangml > /dev/null 2>&1
-wget -q https://raw.githubusercontent.com/lingyia/kangml4.0/master/signer.zip > /dev/null 2>&1
+wget -q ${REPO}/signer.zip > /dev/null 2>&1
 unzip -o signer.zip > /dev/null 2>&1
 mv /APP/kangml/dist/kangml.apk /APP/kangml.apk > /dev/null 2>&1
 java -jar signapk.jar testkey.x509.pem testkey.pk8 /APP/kangml.apk /APP/kangml_sign.apk > /dev/null 2>&1
@@ -572,8 +564,7 @@ cat /home/messages.txt
 
 Install_Last()
 {
-echo "恭喜您，搭建完成！By：kangml.com 破解By：lyiqk.cn&yyrh.me
-搭建问题可加入官方交流群问我，后期老康计划搞一些项目想跟大家一起做，可关注微信公众号：程序员老康
+echo "恭喜您，搭建完成！By：kangml.com 二开开源项目地址：github.com/SenkinAdmin/SFSkangshifuML
 
 
 输入回车结束搭建，并重启VPN："
@@ -584,12 +575,11 @@ shvpn 4 > /dev/null 2>&1
 shvpn 3
 sed -i "s/FasAUTH.bin/kangml_auth.bin/g" /var/www/html/''$Web''/admin.php > /dev/null 2>&1
 echo "感谢使用康师傅(ruò zhì kāng)一键搭建OpenVpn流控脚本~"
-exit;0
+exit 0
 }
 
 Install_Command()
 {
-	#变量安装命令
 	Install_Options
 	Install_Dependency_File
 	Install_firewall
@@ -603,4 +593,4 @@ Install_Command()
 }
 
 Main
-exit;0
+exit 0
