@@ -1,6 +1,4 @@
 # 弱智康4.0 Shell脚本
-# By 凌一
-# 精仿一比一 谁用谁牛逼
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 #######
